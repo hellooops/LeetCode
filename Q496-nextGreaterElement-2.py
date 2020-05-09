@@ -31,17 +31,27 @@ class MyStack:
     return str(self)
 
 
+class Solution:
+  def nextGreaterElement(self, nums1, nums2):
+    m = dict()
+    stack = MyStack()
+    for i in nums2:
+      while not stack.empty() and i > stack.peek():
+        m[stack.pop()] = i
+      stack.push(i)
+    while not stack.empty():
+      m[stack.pop()] = -1
+
+    ret = []
+    for i in nums1:
+      ret.append(m[i])
+    return ret
+
+
 if __name__ == '__main__':
-  stack = MyStack()
-  stack.push(1)
-  print(stack)
-  print(stack.pop())
-  print(stack)
-  print(stack.empty())
-  stack.push(1)
-  stack.push(2)
-  print(stack.empty())
-  print(stack.size())
-  print(stack.pop())
-  print(stack.pop())
-  print(stack.pop())
+  nums1 = [4, 1, 2]
+  nums2 = [1, 3, 4, 2]
+  print(Solution().nextGreaterElement(nums1, nums2))
+  nums1 = [2, 4]
+  nums2 = [1, 2, 3, 4]
+  print(Solution().nextGreaterElement(nums1, nums2))
